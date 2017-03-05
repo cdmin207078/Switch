@@ -11,7 +11,12 @@ let switchEventsHandles = {
     },
     changeSwitchStateFromSwitch(){
         if(this._instance._options.disabled)return;
-        this._instance._toggle();
+
+        if(this._instance._options.onClick == noop) {
+            this._instance._toggle();
+        } else {
+            this._instance._options.onClick();
+        }
     },
     changeSwitchStateFromKeyboard(e){
         var key = e.which || e.keyCode || 0;
@@ -53,6 +58,7 @@ Switch.prototype._init = function (el, options) {
         showText: false,
         disabled: false,
         onInit: noop,
+        onClick: noop,
         onChange: noop,
         onRemove: noop,
         onDestroy: noop
